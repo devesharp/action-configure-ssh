@@ -13,7 +13,9 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - run: ${{ github.action_path }}/configure.sh
+    - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
+      shell: bash
+    - run: configure.sh
       shell: bash
       env:
         SSH_USER: ${{ inputs.USERNAME }}
