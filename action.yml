@@ -1,0 +1,15 @@
+name: 'Configure ssh'
+description: ''
+# inputs:
+#   who-to-greet:  # id of input
+#     description: 'Who to greet'
+#     default: 'World'
+runs:
+  using: "composite"
+  steps:
+    - run: configure.sh
+      shell: bash
+      env:
+        SSH_USER: ${{ secrets.USERNAME }}
+        SSH_KEY: ${{ secrets.KEY }}
+        SSH_HOST: ${{ secrets.HOST }}
