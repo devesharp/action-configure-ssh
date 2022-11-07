@@ -15,8 +15,17 @@ runs:
   steps:
     - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
       shell: bash
-    - run: configure.sh
-      shell: bash
+    - run: |
+        mkdir -p ~/.ssh/
+        echo "$SSH_KEY" > ~/.ssh/server.key
+        chmod 600 ~/.ssh/server.key
+        cat >>~/.ssh/config <<END
+        Host server
+          HostName $SSH_HOST
+          User $SSH_USER
+          IdentityFile ~/.ssh/server.key
+          StrictHostKeyChecking no
+        END
       env:
         SSH_USER: ${{ inputs.USERNAME }}
         SSH_KEY: ${{ inputs.KEY }}
